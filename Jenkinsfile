@@ -39,35 +39,12 @@ pipeline {
                 echo "After ${backendVersion}"
             }
         }
-        
-        stage('Setup compose environmet') {
-            steps {
-                echo "Building backend image ${backendVersion}"
-                sh "docker build -t ${backendVersion} ."
-                echo "Generate docker-compose file"
-                sh "sed -i 's@{{BACKEND_DOCKER_IMAGE}}@${backendVersion}@g' docker-compose.dist"
-                sh 'cat docker-compose.dist'
-                sh "docker-compose -f docker-compose.dist up -d"
-                sh "sleep 5"
-                sh "docker-compose -f docker-compose.dist ps"
-            }
-        }
-        
-        stage("External testing") {
-            agent {
-               docker { image 'postman/newman:alpine' }
-            }
-            steps {
-                echo "Testing postman-newman"
-                sh 'newman run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda'
-            }
-        }
     }
 
     post {
         always {
             echo "Down ephemeral environment...."
-            sh "docker-compose -f docker-compose.dist down"
+            //sh "docker-compose -f docker-compose.dist down"
         }
 
         success {
