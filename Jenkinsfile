@@ -50,6 +50,8 @@ pipeline {
                 sh "docker-compose -f docker-compose.dist up -d"
                 sh "sleep 10"
                 sh "docker-compose -f docker-compose.dist ps"
+                echo "RED RED"
+                sh "ifconfig"
             }
         }
         
