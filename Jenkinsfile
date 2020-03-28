@@ -48,18 +48,19 @@ pipeline {
                 sh "sed -i 's@{{BACKEND_DOCKER_IMAGE}}@${backendVersion}@g' docker-compose.dist"
                 sh 'cat docker-compose.dist'
                 sh "docker-compose -f docker-compose.dist up -d"
-                sh "sleep 5"
+                sh "sleep 10"
                 sh "docker-compose -f docker-compose.dist ps"
             }
         }
         
         stage("External testing") {
-            agent {
-               docker { image 'postman/newman:alpine' }
-            }
             steps {
                 echo "Testing postman-newman"
-                sh 'newman run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda'
+                dir("${env.WORKSPACE}/newman") {
+                    sh 'npm install'
+                    sh 'newman run mitocode-calculator.postman_collection.json -e mitocode_calculator.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml --insecure'
+                    junit 'newman.xml'
+                }
             }
         }
     }
