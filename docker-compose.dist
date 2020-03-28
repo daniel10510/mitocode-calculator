@@ -4,11 +4,6 @@ services:
   api:
     image: {{BACKEND_DOCKER_IMAGE}}
     restart: always
-    networks:
-      - apinet
     ports:
       - 5001:5000
       
-networks:
-  apinet:
-    driver: bridge
