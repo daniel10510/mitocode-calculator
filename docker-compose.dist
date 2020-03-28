@@ -5,14 +5,14 @@ services:
     image: {{BACKEND_DOCKER_IMAGE}}
     restart: always
     networks:
-    	apinet
-      		ipv4_address: 172.20.0.5
+      apinet
+        ipv4_address: 172.20.0.5
     ports:
       - 5001:5000
       
 networks:
   apinet:
     ipam:
-    	driver: default
-    	config:
-        	- subnet: 172.20.0.0/24
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24
