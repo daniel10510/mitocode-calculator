@@ -50,8 +50,6 @@ pipeline {
                 sh "docker-compose -f docker-compose.dist up -d"
                 sh "sleep 10"
                 sh "docker-compose -f docker-compose.dist ps"
-                echo "RED RED"
-                sh "ifconfig"
             }
         }
         
@@ -60,7 +58,6 @@ pipeline {
                 echo "Testing postman-newman"
                 sh "ls"
                 dir("${env.WORKSPACE}/newman") {
-                    sh 'npm install'
                     sh 'newman run mitocode-calculator.postman_collection.json -e mitocode_calculator.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml --insecure'
                     junit 'newman.xml'
                 }
