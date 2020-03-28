@@ -5,7 +5,7 @@ services:
     image: {{BACKEND_DOCKER_IMAGE}}
     restart: always
     networks:
-      apinet
+      apinet:
         ipv4_address: 172.20.0.5
     ports:
       - 5001:5000
