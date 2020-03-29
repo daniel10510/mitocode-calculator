@@ -6,7 +6,7 @@ services:
     restart: always
     networks:
       apinet:
-        ipv4_address: 172.20.0.5
+        ipv4_address: 192.168.0.40
     ports:
       - 5001:5000
       
@@ -14,4 +14,4 @@ networks:
   apinet:
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 192.168.0.0/25
