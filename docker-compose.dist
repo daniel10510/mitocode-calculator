@@ -1,17 +1,14 @@
-version: '3.3'
+version: '3.1'
 
 services:
   api:
     image: {{BACKEND_DOCKER_IMAGE}}
     restart: always
     networks:
-      apinet:
-        ipv4_address: 192.168.0.40
+      - apinet
     ports:
       - 5001:5000
       
 networks:
   apinet:
-    ipam:
-      config:
-        - subnet: 192.168.0.0/25
+    driver: bridge
