@@ -21,6 +21,7 @@ pipeline {
     post {
         always {
             echo "Save Artifact"
+            archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
         }
 
         success {
