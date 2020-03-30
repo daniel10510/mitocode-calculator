@@ -28,7 +28,6 @@ pipeline {
         stage('Prepare backend version') {
             agent {
                 docker { image 'maven:3.6.3-jdk-11-slim' }
-                dockerfile { args '--entrypoint=\'\'' }
             }
             steps {
                 echo "Getting backend version with maven"
