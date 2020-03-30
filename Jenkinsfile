@@ -61,7 +61,6 @@ pipeline {
                 sh "ls"
                 dir("${env.WORKSPACE}/newman") {
                     sh 'newman run mitocode-calculator.postman_collection.json -e mitocode_calculator.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml --insecure'
-                    junit 'newman.xml'
                 }
             }
         }
