@@ -47,7 +47,7 @@ pipeline {
                 sh "ls"
                 sh "docker build -t ${backendVersion} ."
                 echo "Generate docker-compose file"
-                sh "sed -i 's@{{BACKEND_DOCKER_IMAGE}}@${backendVersion}@g' docker-compose.dist"
+                sh "sed -i '' 's@{{BACKEND_DOCKER_IMAGE}}@${backendVersion}@g' docker-compose.dist"
                 sh 'cat docker-compose.dist'
                 sh "docker-compose -f docker-compose.dist up -d"
                 sh "sleep 10"
