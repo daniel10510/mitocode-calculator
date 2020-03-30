@@ -1,0 +1,133 @@
+Lanzada por el usuario root
+Obtained JenkinsfileBuild from git https://github.com/daniel10510/mitocode-calculator.git
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins  in /Users/daniel/.jenkins/workspace/mitocode-calculator_deploy-dockerhub
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+using credential 5e60d61b-03f4-4a6d-b6ab-411be07ef853
+Cloning the remote Git repository
+Cloning repository https://github.com/daniel10510/mitocode-calculator.git
+ > git init /Users/daniel/.jenkins/workspace/mitocode-calculator_deploy-dockerhub # timeout=10
+Fetching upstream changes from https://github.com/daniel10510/mitocode-calculator.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://github.com/daniel10510/mitocode-calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/daniel10510/mitocode-calculator.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/daniel10510/mitocode-calculator.git # timeout=10
+Fetching upstream changes from https://github.com/daniel10510/mitocode-calculator.git
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://github.com/daniel10510/mitocode-calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 04d66901c18120ba36dc94f55b11f5d78d99c541 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 04d66901c18120ba36dc94f55b11f5d78d99c541 # timeout=10
+Commit message: "JenkinsfileBuild v1.0"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build backend image)
+[Pipeline] sh
++ docker build -t daniel10510/mitocode-calculator:1 .
+Sending build context to Docker daemon  466.4kB
+
+Step 1/15 : FROM maven:3.6.3-jdk-11-slim AS builder
+ ---> 828766b5e113
+Step 2/15 : WORKDIR /app
+ ---> Using cache
+ ---> 985dd0ad7550
+Step 3/15 : COPY pom.xml .
+ ---> Using cache
+ ---> cef6ba638f71
+Step 4/15 : RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.0.2:go-offline
+ ---> Using cache
+ ---> 69de6198285a
+Step 5/15 : COPY src ./src
+ ---> Using cache
+ ---> aa25b9753984
+Step 6/15 : RUN ls -la ./src
+ ---> Using cache
+ ---> cef46ee429de
+Step 7/15 : RUN mvn clean package -Dmaven.test.skip=true
+ ---> Using cache
+ ---> 19a108edfb1b
+Step 8/15 : RUN ls -la /app
+ ---> Using cache
+ ---> 2a1aee279696
+Step 9/15 : FROM openjdk:11.0.6-jdk
+ ---> d29dd615eaf4
+Step 10/15 : LABEL maintainer="daniel10510@gmail.com"
+ ---> Using cache
+ ---> b5fb86841486
+Step 11/15 : WORKDIR /workspace
+ ---> Using cache
+ ---> 78112ef205b5
+Step 12/15 : RUN ls -la /workspace
+ ---> Using cache
+ ---> cc3b2f52f40a
+Step 13/15 : COPY --from=builder /app/target/mitocode-calculator*.jar app.jar
+ ---> Using cache
+ ---> ebb24f07d652
+Step 14/15 : RUN ls -la /workspace
+ ---> Using cache
+ ---> 9d6d3853d2d3
+Step 15/15 : ENTRYPOINT exec java -jar /workspace/app.jar
+ ---> Using cache
+ ---> 9eeefcb307a1
+Successfully built 9eeefcb307a1
+Successfully tagged daniel10510/mitocode-calculator:1
+[Pipeline] withCredentials
+Masking supported pattern matches of $USERNAME or $PASSWORD
+[Pipeline] {
+[Pipeline] sh
++ docker login -u **** -p ****
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+[Pipeline] sh
++ docker push ****/mitocode-calculator:1
+The push refers to repository [docker.io/****/mitocode-calculator]
+46a9c43f5349: Preparing
+ac75cf305c04: Preparing
+4186db990701: Preparing
+5b5fbf48ec75: Preparing
+832f129ebea4: Preparing
+6670e930ed33: Preparing
+c7f27a4eb870: Preparing
+e70dfb4c3a48: Preparing
+1c76bd0dc325: Preparing
+6670e930ed33: Waiting
+c7f27a4eb870: Waiting
+e70dfb4c3a48: Waiting
+1c76bd0dc325: Waiting
+832f129ebea4: Mounted from library/openjdk
+4186db990701: Mounted from library/openjdk
+5b5fbf48ec75: Mounted from library/openjdk
+ac75cf305c04: Pushed
+6670e930ed33: Mounted from library/openjdk
+c7f27a4eb870: Mounted from library/openjdk
+e70dfb4c3a48: Mounted from library/openjdk
+1c76bd0dc325: Mounted from library/openjdk
+46a9c43f5349: Pushed
+1: digest: sha256:41ccde1586783892ba3783e3390f52a9c86f47eada097a19ef554d94d7a201b2 size: 2213
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
