@@ -7,10 +7,6 @@ pipeline {
             steps {
                 echo "Build backend with maven"
                 sh 'mvn -B -DskipTests clean package'
-                echo "ls"
-               	sh "ls"
-               	echo "ls target/"
-               	sh "ls target/"
             }
         }
     }
@@ -18,8 +14,6 @@ pipeline {
     post {
         always {
             echo "Save Artifact"
-            echo "ls target/"
-            sh "ls target/"
             archiveArtifacts artifacts: 'target/mitocode-calculator.jar', onlyIfSuccessful: true
         }
 
