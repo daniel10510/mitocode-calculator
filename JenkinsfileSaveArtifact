@@ -12,8 +12,30 @@ pipeline {
            steps {
                sh "docker build -t ${INTERNAL_DOCKER_BACKEND} ."
                echo "ls"
-               sh "ls"
+               sh "ls /target"
            }
+        }
+    }
+    
+    post {
+        always {
+            echo "Save Artifact"
+        }
+
+        success {
+            echo "success"
+        }
+
+        unstable {
+            echo "unstable"
+        }
+
+        failure {
+            echo "failure"
+        }
+
+        changed {
+            echo "changed"
         }
     }
 }

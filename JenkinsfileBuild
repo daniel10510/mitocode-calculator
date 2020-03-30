@@ -18,5 +18,27 @@ pipeline {
            }
         }
     }
+    
+    post {
+        always {
+            echo "Pushing docker hub successfully"
+        }
+
+        success {
+            echo "success"
+        }
+
+        unstable {
+            echo "unstable"
+        }
+
+        failure {
+            echo "failure"
+        }
+
+        changed {
+            echo "changed"
+        }
+    }
 }
 
