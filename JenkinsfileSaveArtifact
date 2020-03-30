@@ -12,6 +12,8 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
                 echo "ls"
                	sh "ls"
+               	echo "ls target/"
+               	sh "ls target/"
             }
         }
     }
