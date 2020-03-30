@@ -1,0 +1,277 @@
+Lanzada por el usuario root
+Obtained Jenkinsfile from git https://github.com/daniel10510/mitocode-calculator.git
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins  in /Users/daniel/.jenkins/workspace/PruebaPipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+using credential 5e60d61b-03f4-4a6d-b6ab-411be07ef853
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/daniel10510/mitocode-calculator.git # timeout=10
+Fetching upstream changes from https://github.com/daniel10510/mitocode-calculator.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://github.com/daniel10510/mitocode-calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 23a25383246375b03f8184a4710906ae4a9f2589 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 23a25383246375b03f8184a4710906ae4a9f2589 # timeout=10
+Commit message: "Jenkinsfile v1.29"
+ > git rev-list --no-walk 0d9c6ec0a286265e466cf2b5b8ed6f0f0ea02250 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Prepare backend version)
+[Pipeline] node
+Running on Jenkins  in /Users/daniel/.jenkins/workspace/PruebaPipeline@2
+[Pipeline] {
+[Pipeline] checkout
+using credential 5e60d61b-03f4-4a6d-b6ab-411be07ef853
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/daniel10510/mitocode-calculator.git # timeout=10
+Fetching upstream changes from https://github.com/daniel10510/mitocode-calculator.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --progress -- https://github.com/daniel10510/mitocode-calculator.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 23a25383246375b03f8184a4710906ae4a9f2589 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 23a25383246375b03f8184a4710906ae4a9f2589 # timeout=10
+Commit message: "Jenkinsfile v1.29"
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] sh
++ docker inspect -f . maven:3.6.3-jdk-11-slim
+.
+[Pipeline] withDockerContainer
+Jenkins  does not seem to be running inside a container
+$ docker run -t -d -u 501:20 -w /Users/daniel/.jenkins/workspace/PruebaPipeline@2 -v /Users/daniel/.jenkins/workspace/PruebaPipeline@2:/Users/daniel/.jenkins/workspace/PruebaPipeline@2:rw,z -v /Users/daniel/.jenkins/workspace/PruebaPipeline@2@tmp:/Users/daniel/.jenkins/workspace/PruebaPipeline@2@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** maven:3.6.3-jdk-11-slim cat
+$ docker top cacdb089b40bf8a6f844268f328112dea4d29c66de9423f79de481210382587e -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Getting backend version with maven
+[Pipeline] echo
+Before 0.0.0
+[Pipeline] sh
++ mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+[Pipeline] script
+[Pipeline] {
+[Pipeline] readFile
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] echo
+After daniel10510/calculator-api:1.1.1-7
+[Pipeline] }
+$ docker stop --time=1 cacdb089b40bf8a6f844268f328112dea4d29c66de9423f79de481210382587e
+$ docker rm -f cacdb089b40bf8a6f844268f328112dea4d29c66de9423f79de481210382587e
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Setup compose environmet)
+[Pipeline] echo
+Building backend image daniel10510/calculator-api:1.1.1-7
+[Pipeline] echo
+ls
+[Pipeline] sh
++ ls
+Dockerfile
+DockerfileJenkinsWithDocker
+Jenkinsfile
+README.md
+docker-compose.dist
+evidencias
+newman
+newman@tmp
+pom.xml
+src
+target
+[Pipeline] sh
++ docker build -t daniel10510/calculator-api:1.1.1-7 .
+Sending build context to Docker daemon  480.3kB
+
+Step 1/15 : FROM maven:3.6.3-jdk-11-slim AS builder
+ ---> 828766b5e113
+Step 2/15 : WORKDIR /app
+ ---> Using cache
+ ---> 985dd0ad7550
+Step 3/15 : COPY pom.xml .
+ ---> Using cache
+ ---> cef6ba638f71
+Step 4/15 : RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.0.2:go-offline
+ ---> Using cache
+ ---> 69de6198285a
+Step 5/15 : COPY src ./src
+ ---> Using cache
+ ---> aa25b9753984
+Step 6/15 : RUN ls -la ./src
+ ---> Using cache
+ ---> cef46ee429de
+Step 7/15 : RUN mvn clean package -Dmaven.test.skip=true
+ ---> Using cache
+ ---> 19a108edfb1b
+Step 8/15 : RUN ls -la /app
+ ---> Using cache
+ ---> 2a1aee279696
+Step 9/15 : FROM openjdk:11.0.6-jdk
+ ---> d29dd615eaf4
+Step 10/15 : LABEL maintainer="daniel10510@gmail.com"
+ ---> Using cache
+ ---> b5fb86841486
+Step 11/15 : WORKDIR /workspace
+ ---> Using cache
+ ---> 78112ef205b5
+Step 12/15 : RUN ls -la /workspace
+ ---> Using cache
+ ---> cc3b2f52f40a
+Step 13/15 : COPY --from=builder /app/target/mitocode-calculator*.jar app.jar
+ ---> Using cache
+ ---> ebb24f07d652
+Step 14/15 : RUN ls -la /workspace
+ ---> Using cache
+ ---> 9d6d3853d2d3
+Step 15/15 : ENTRYPOINT exec java -jar /workspace/app.jar
+ ---> Using cache
+ ---> 9eeefcb307a1
+Successfully built 9eeefcb307a1
+Successfully tagged daniel10510/calculator-api:1.1.1-7
+[Pipeline] echo
+Generate docker-compose file
+[Pipeline] sh
++ sed -i '' 's@{{BACKEND_DOCKER_IMAGE}}@daniel10510/calculator-api:1.1.1-7@g' docker-compose.dist
+[Pipeline] sh
++ cat docker-compose.dist
+version: '3.3'
+
+services:
+  api:
+    image: daniel10510/calculator-api:1.1.1-7
+    restart: always
+    networks:
+      - apinet
+    ports:
+      - 5001:5000
+      
+networks:
+  apinet:
+    driver: bridge
+[Pipeline] sh
++ docker-compose -f docker-compose.dist up -d
+Creating network "pruebapipeline_apinet" with driver "bridge"
+Creating pruebapipeline_api_1 ... 
+[1A[2K
+Creating pruebapipeline_api_1 ... [32mdone[0m
+[1B
+[Pipeline] sh
++ sleep 10
+[Pipeline] sh
++ docker-compose -f docker-compose.dist ps
+        Name                      Command               State           Ports         
+--------------------------------------------------------------------------------------
+pruebapipeline_api_1   /bin/sh -c exec java -jar  ...   Up      0.0.0.0:5001->5000/tcp
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing postman-newman
+[Pipeline] sh
++ ls
+Dockerfile
+DockerfileJenkinsWithDocker
+Jenkinsfile
+README.md
+docker-compose.dist
+evidencias
+newman
+newman@tmp
+pom.xml
+src
+target
+[Pipeline] dir
+Running in /Users/daniel/.jenkins/workspace/PruebaPipeline/newman
+[Pipeline] {
+[Pipeline] sh
++ newman run mitocode-calculator.postman_collection.json -e mitocode_calculator.postman_environment.json --reporters cli,junit --reporter-junit-export newman.xml --insecure
+newman
+
+mitocode-calculator
+
+→ add
+  GET http://192.168.0.16:5001/api/add/2/6 [200 OK, 261B, 778ms]
+
+→ sub
+  GET http://192.168.0.16:5001/api/sub/5/3 [200 OK, 261B, 53ms]
+
+→ mul
+  GET http://192.168.0.16:5001/api/mul/5/3 [200 OK, 263B, 29ms]
+
+→ div
+  GET http://192.168.0.16:5001/api/div/15/3 [200 OK, 263B, 22ms]
+
+┌─────────────────────────┬────────────────────┬────────────────────┐
+│                         │           executed │             failed │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              iterations │                  1 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│                requests │                  4 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│            test-scripts │                  4 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│      prerequest-scripts │                  4 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              assertions │                  0 │                  0 │
+├─────────────────────────┴────────────────────┴────────────────────┤
+│ total run duration: 1153ms                                        │
+├───────────────────────────────────────────────────────────────────┤
+│ total data received: 38B (approx)                                 │
+├───────────────────────────────────────────────────────────────────┤
+│ average response time: 220ms [min: 22ms, max: 778ms, s.d.: 322ms] │
+└───────────────────────────────────────────────────────────────────┘
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Down ephemeral environment....
+[Pipeline] sh
++ docker-compose -f docker-compose.dist down
+Stopping pruebapipeline_api_1 ... 
+[1A[2K
+Stopping pruebapipeline_api_1 ... [32mdone[0m
+[1BRemoving pruebapipeline_api_1 ... 
+[1A[2K
+Removing pruebapipeline_api_1 ... [32mdone[0m
+[1BRemoving network pruebapipeline_apinet
+[Pipeline] echo
+changed
+[Pipeline] echo
+success
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
