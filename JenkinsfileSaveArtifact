@@ -1,0 +1,20 @@
+pipeline {
+
+    agent any
+
+    environment {
+        INTERNAL_DOCKER_BACKEND = "daniel10510/mitocode-calculator:${env.BUILD_NUMBER}"
+    }
+
+    stages {
+
+        stage('Build backend image') {
+           steps {
+               sh "docker build -t ${INTERNAL_DOCKER_BACKEND} ."
+               echo "ls"
+               sh "ls"
+           }
+        }
+    }
+}
+
