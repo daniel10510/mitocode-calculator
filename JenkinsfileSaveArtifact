@@ -21,7 +21,7 @@ pipeline {
     post {
         always {
             echo "Save Artifact"
-            archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: true
+            archiveArtifacts artifacts: 'target/mitocode-calculator.jar', onlyIfSuccessful: true
         }
 
         success {
