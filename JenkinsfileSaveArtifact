@@ -1,12 +1,7 @@
 pipeline {
 
-    agent any
-
     stages {
     	stage('Build backend') {
-            agent {
-                docker { image 'maven:3.6.3-jdk-11-slim' }
-            }
             steps {
                 echo "Build backend with maven"
                 sh 'mvn -B -DskipTests clean package'
