@@ -11,6 +11,6 @@ FROM openjdk:11.0.6-jdk
 LABEL maintainer="daniel10510@gmail.com"
 WORKDIR /workspace
 RUN ls -la /workspace
-COPY --from=builder /app/target/mitocode-calculator.jar app.jar
+COPY --from=builder /app/target/mitocode-calculator*.jar app.jar
 RUN ls -la /workspace
 ENTRYPOINT exec java -jar /workspace/app.jar
