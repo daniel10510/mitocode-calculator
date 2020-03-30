@@ -12,7 +12,7 @@ pipeline {
            steps {
                sh "docker build -t ${INTERNAL_DOCKER_BACKEND} ."
                echo "ls"
-               sh "ls /target"
+               sh "ls target/"
            }
         }
     }
