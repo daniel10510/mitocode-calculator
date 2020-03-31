@@ -26,7 +26,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Mitocode REST API")
+                .title("Mitocode REST API v1.1")
                 .description("Trabajo final del curso de DevOps Mitocode")
                 .contact(new Contact("Mitocode", "https://www.mitocode.com/", "devops@mitocode.com"))
                 .license("Apache License Version 2.0")
