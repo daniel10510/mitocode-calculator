@@ -9,7 +9,7 @@ pipeline {
         DEPLOY_TO_BACKEND = "${params.DEPLOY_TO_BACKEND}"
         APPLICATION_SERVER = "${params.APPLICATION_SERVER}"
         APPLICATION_PEM = "/var/lib/jenkins/pems/id_rsa"
-        INTERNAL_DOCKER_BACKEND = "dockerhubuser2020/api-student:${STACK_VERSION}"
+        INTERNAL_DOCKER_BACKEND = "daniel10510/mitocode-calculator:${STACK_VERSION}"
     }
 
     stages {
