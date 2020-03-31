@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  api:
+    image: daniel10510/mitocode-calculator:1
+    deploy:
+      replicas: 1
+    networks:
+      - apinet
+    ports:
+      - 5001:5000
+
+networks:
+  apinet:
